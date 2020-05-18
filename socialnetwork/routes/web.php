@@ -15,18 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('web')->name("home");
 
-
-
 Route::group(['middleware' => ['web']], function () {
     Route::post('/signup', 'UserController@postSignUp')->name('signup');
     Route::post('/signin', 'UserController@postSignIn')->name('signin');
     Route::get('/dashboard', 'UserController@getDashboard')->name('dashboard')->middleware("auth");
-
-    Route::post('/dashboard', 'PostController@postCreate')->name('post.create')->middleware("auth");
+    Route::post('/createpost', 'PostController@postCreate')->name('post.create')->middleware("auth");
+    Route::get('/deletepost/{post_id}', 'PostController@deletePost')->name('post.delete')->middleware("auth");
+    Route::get('/logout/', 'UserController@getlogOut')->name('logout')->middleware("auth");
 });
 
 
 //Rename soon
 
 //Route::post('/dashboard545', 'PostController@getDashboard')->name('post.edit')->middleware("auth");
-//Route::post('/dashboard535', 'PostController@getDashboard')->name('post.delete')->middleware("auth");

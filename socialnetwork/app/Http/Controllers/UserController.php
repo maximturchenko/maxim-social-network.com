@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Post;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function  getDashboard(){
-        return view("dashboard");
+        $posts = Post::orderBy("created_at" , "desc")->get();
+
+        return view("dashboard",compact("posts"));
      }
 
     public function postSignUp(Request $request){
@@ -35,18 +38,21 @@ class UserController extends Controller
         return redirect()->route("dashboard");
     }
     public function postSignIn(Request $request){
-
         $validatedData = $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
 
         $email = $request['email'];
-        $password = bcrypt($request['password']);
-
+        $password = $request['password'];
         if(Auth::attempt(['email' => $email, 'password' => $password])){
             return redirect()->route("dashboard");
         }
         return redirect()->back();
+    }
+
+    public function getlogOut(){
+        Auth::logout();
+        return redirect()->route("home");
     }
 }
