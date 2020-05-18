@@ -27,4 +27,4 @@ Route::group(['middleware' => ['web']], function () {
 
 //Rename soon
 
-//Route::post('/dashboard545', 'PostController@getDashboard')->name('post.edit')->middleware("auth");
+Route::post('/edit/{post_id}', 'PostController@getDashboard')->name('post.edit')->middleware("auth");
