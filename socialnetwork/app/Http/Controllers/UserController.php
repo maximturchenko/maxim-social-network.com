@@ -42,7 +42,6 @@ class UserController extends Controller
         ]);
 
         $email = $request['email'];
-        $first_name = $request['first_name'];
         $password = bcrypt($request['password']);
 
         if(Auth::attempt(['email' => $email, 'password' => $password])){

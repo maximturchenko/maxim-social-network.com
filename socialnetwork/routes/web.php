@@ -19,7 +19,14 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     Route::post('/signup', 'UserController@postSignUp')->name('signup');
-    Route::post('/signin', 'UserController@postSigIn')->name('signin');
-
+    Route::post('/signin', 'UserController@postSignIn')->name('signin');
     Route::get('/dashboard', 'UserController@getDashboard')->name('dashboard')->middleware("auth");
+
+    Route::post('/dashboard', 'PostController@postCreate')->name('post.create')->middleware("auth");
 });
+
+
+//Rename soon
+
+//Route::post('/dashboard545', 'PostController@getDashboard')->name('post.edit')->middleware("auth");
+//Route::post('/dashboard535', 'PostController@getDashboard')->name('post.delete')->middleware("auth");
