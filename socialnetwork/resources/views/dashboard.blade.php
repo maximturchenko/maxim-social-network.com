@@ -46,8 +46,7 @@
               </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('post.edit') }}" method="post">
-                    @csrf
+                <form>
                     <div class="form-group">
                       <textarea class="form-control" name="body" id="edit-post" rows="5" placeholder="Your Post"></textarea>
                     </div>
@@ -62,6 +61,6 @@
         </div>
       </div>
       <script>
-            var url = {{route("post.edit")}};
-        </script>
+          var url = '{{route('post.edit')}}';
+      </script>
 @endsection
