@@ -29,10 +29,10 @@ class PostController extends Controller
             return redirect()->back();
         }
         $post->body = $request['body'];
-        if($request->user()->posts()->save($post)){
+        if($post->update()){
             $message = "Пост успешно обновлен!";
         }
-        return response()->json(['message'=>$message]);
+        return response()->json(['message'=>$message, 'new_body'=>$post->body]);
     }
 
     public function deletePost($post_id){

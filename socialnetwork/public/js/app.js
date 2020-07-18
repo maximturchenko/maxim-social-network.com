@@ -1,9 +1,11 @@
 var postId = 0;
-
+var Body = null;
 $(".post").find(".interaction").find(".edit").on("click", function(event){
     event.preventDefault();
-    var Body = event.target.parentNode.parentNode.childNodes[1].textContent;
-    $('#editpostModal').find(".modal-body").find("#edit-post").val(Body);
+    console.log(event);
+    Body = event.target.parentNode.parentNode.childNodes[1];
+    var body_text = Body.textContent;
+    $('#editpostModal').find(".modal-body").find("#edit-post").val(body_text);
     postId =  event.target.parentNode.parentNode.dataset['postid'];
     $('#editpostModal').modal();
 });
@@ -22,7 +24,8 @@ $(".savechanges").on("click",function(){
         data:{body:$('#edit-post').val(),post_id:postId},
         success:function( msg ) {
             console.log(msg['message']);
-            console.log( msg['id']);
+            Body.textContent = msg['new_body'];
+            $('#editpostModal').modal('hide');
         }
     });
 
