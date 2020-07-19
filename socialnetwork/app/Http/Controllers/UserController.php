@@ -81,8 +81,8 @@ class UserController extends Controller
 
     
     public function imageAccount($filename){        
-        $path_to_file = Storage::disk('local')->url($filename);      
-        return $path_to_file;
+        $file = Storage::disk('local')->get($filename);      
+        return $file;
     }
     
     
