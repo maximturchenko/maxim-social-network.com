@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -55,4 +57,34 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route("home");
     }
+
+
+    public function getAccount(){        
+        return view("account" , ['user'=>Auth::user()]);
+    }
+
+    
+    public function saveAccount(Request $request){      
+        $validatedData = $request->validate([
+            'first_name' => 'required', 
+        ]);
+        $user = Auth::user();
+        $user->first_name = $request->first_name;
+        $user->update();
+        $file = $request->file('image');
+        $filename = $request['first_name'].'-'.$user->id.'.jpg';
+        if($file){
+            Storage::disk('local')->put($filename , File::get($file));
+        }
+        return redirect()->route("account.get");
+    }
+
+    
+    public function imageAccount($filename){        
+        $path_to_file = Storage::disk('local')->url($filename);      
+        return $path_to_file;
+    }
+    
+    
+    
 }

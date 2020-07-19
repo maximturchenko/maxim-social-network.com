@@ -13,8 +13,9 @@
             <a class="nav-link" href="{{route("dashboard")}}">Dashboard</a>
         </li>
         @if(Auth::user())
-            <li class="nav-item">
-                <a class="nav-link" href="{{route("logout")}}">Logout</a>
+            <li class="nav-item">                       
+              <a class="nav-link" href="{{route("account.get")}}">Account</a>
+              <a class="nav-link" href="{{route("logout")}}">Logout</a>
             </li>
         @endif
 

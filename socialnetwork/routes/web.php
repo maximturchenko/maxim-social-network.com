@@ -24,6 +24,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/logout/', 'UserController@getlogOut')->name('logout')->middleware("auth");
     Route::post('/edit/', 'PostController@editPost')->name('post.edit')->middleware("auth");
 
+    Route::get('/account', 'UserController@getAccount')->name('account.get')->middleware("auth");
+
+
+    
+    Route::post('/account/save', 'UserController@saveAccount')->name('account.save')->middleware("auth");    
+    Route::get('/userimage/{filename}', 'UserController@imageAccount')->name('account.image')->middleware("auth");
 });
 
 

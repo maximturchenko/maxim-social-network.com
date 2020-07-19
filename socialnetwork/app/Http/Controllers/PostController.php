@@ -45,5 +45,4 @@ class PostController extends Controller
         return redirect()->route("dashboard")->with('message', $message);
     }
 
-
 }
