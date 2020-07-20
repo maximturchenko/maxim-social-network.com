@@ -10,16 +10,22 @@ $(".post").find(".interaction").find(".edit").on("click", function(event){
     $('#editpostModal').modal();
 });
 
+$("html").on("click",function(){ 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    }); 
+});
 
-$(".savechanges").on("click",function(){
-    console.log(url);
+$(".savechanges").on("click",function(){ 
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
     $.ajax({
-        url:url,
+        url:urlEdit,
         method:'POST',
         data:{body:$('#edit-post').val(),post_id:postId},
         success:function( msg ) {
@@ -29,4 +35,19 @@ $(".savechanges").on("click",function(){
         }
     });
 
+});
+
+$(".like").on("click",function(event){
+    event.preventDefault();
+    var iSlike = event.target.previousElementSibling == null ? true : false;      
+    postId =  event.target.parentNode.parentNode.dataset['postid'];
+    $.ajax({
+        method:'POST',
+        url:urlLike,
+        data:{isLike:iSlike,post_id:postId},
+        success:function( msg ) {
+            console.log(msg['message']);
+            
+        }
+    });
 });
