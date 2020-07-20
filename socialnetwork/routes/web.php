@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::post('/account/save', 'UserController@saveAccount')->name('account.save')->middleware("auth");    
     Route::get('/userimage/{filename}', 'UserController@imageAccount')->name('account.image')->middleware("auth");
+    
+    Route::post('/like/', 'PostController@postLikePost')->name('post.like')->middleware("auth"); 
 });
 
 

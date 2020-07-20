@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Like;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -44,5 +45,35 @@ class PostController extends Controller
         $message = "Пост успешно удален!";
         return redirect()->route("dashboard")->with('message', $message);
     }
-
+    public function postLikePost(Request $request){
+        $post_id = $request['post_id'];
+        $isLike = $request['isLike'] === 'true' ? true : false; 
+        $update = false;
+        $post = Post::find($post_id);
+        if(!$post){
+            return null;
+        }
+        $user = Auth::user();
+        $like = $user->likes()->where('post_id',$post_id )->first();
+        if($like){
+            $already_like = $like->like;
+            $update = true;
+            if($already_like == $isLike){
+                $like->delete();
+                return null;
+            }
+        }else{
+            $like = new Like();
+       
+        }
+        $like->like = $isLike;
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        if($update){
+            $like->update();
+        }else{
+            $like->save();
+        }
+        return null;
+    }
 }
