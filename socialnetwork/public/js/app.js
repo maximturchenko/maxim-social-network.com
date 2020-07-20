@@ -45,9 +45,13 @@ $(".like").on("click",function(event){
         method:'POST',
         url:urlLike,
         data:{isLike:iSlike,post_id:postId},
-        success:function( msg ) {
-            console.log(msg['message']);
-            
+        success:function( ) {
+            event.target.innerHTML = iSlike ? event.target.innerHTML == 'Like' ? 'You like this post' : 'Like' : event.target.innerHTML == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
+            if(iSlike){
+                event.target.nextElementSibling.innerHTML = 'Dislike';
+            }else{
+                event.target.previousElementSibling.innerHTML = 'Like';
+            }
         }
     });
 });
